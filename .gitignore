@@ -1,1 +1,6 @@
+# Folders
+__pycache__/
 data/
+
+# Secrets
+.env

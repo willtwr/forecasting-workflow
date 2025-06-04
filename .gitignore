@@ -1,6 +1,8 @@
 # Folders
 __pycache__/
 data/
+runs/
+models/
 
 # Secrets
 .env

@@ -2,7 +2,7 @@
 __pycache__/
 data/
 runs/
-models/
+weights/
 
 # Secrets
 .env

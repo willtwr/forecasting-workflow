@@ -1,6 +1,6 @@
-import numpy as np
 import torch
 from torch import nn
+from collections import OrderedDict
 
 
 class FTTransformerClassifier(nn.Module):
@@ -62,11 +62,11 @@ class FTTransformerClassifier(nn.Module):
         )
         
         # Output classifier
-        self.classifier = nn.Sequential(
-            nn.LayerNorm(d_model),
-            nn.ReLU(),
-            nn.Linear(d_model, num_classes)
-        )
+        self.classifier = nn.Sequential(OrderedDict([
+            ("norm0", nn.LayerNorm(d_model)),
+            ("relu0", nn.ReLU()),
+            ("linear0", nn.Linear(d_model, num_classes))
+        ]))
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass of the model.

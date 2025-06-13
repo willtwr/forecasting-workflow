@@ -89,12 +89,18 @@ class FTTransformerClassifier(nn.Module):
                 x_cont.append(self.cont_embeddings[n_cont](x[:,i].unsqueeze(1)))
                 n_cont += 1
 
-        x_cat = torch.stack(x_cat, dim=1)
-        x_cont = torch.stack(x_cont, dim=1)
-        
         # Stack cls
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1)
-        x = torch.cat([cls_tokens, x_cat, x_cont], dim=1)
+        if len(x_cat) == 0:
+            x_cont = torch.stack(x_cont, dim=1)
+            x = torch.cat([cls_tokens, x_cont], dim=1)
+        elif len(x_cont) == 0:
+            x_cat = torch.stack(x_cat, dim=1)
+            x = torch.cat([cls_tokens, x_cat], dim=1)
+        else:
+            x_cat = torch.stack(x_cat, dim=1)
+            x_cont = torch.stack(x_cont, dim=1)
+            x = torch.cat([cls_tokens, x_cat, x_cont], dim=1)
         
         # Apply transformer encoder
         x = self.transformer_encoder(x)

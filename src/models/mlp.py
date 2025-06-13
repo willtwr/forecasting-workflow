@@ -19,7 +19,8 @@ class MLPClassifier(nn.Module):
             feature_cats: list,
             num_classes: int,
             num_hidden_neurons: int | list[int] = 256,
-            num_hidden_layers: int = 3
+            num_hidden_layers: int = 3,
+            dropout: float = 0.5
     ) -> None:
         super().__init__()
         
@@ -33,13 +34,13 @@ class MLPClassifier(nn.Module):
         layers = [
             nn.Linear(input_dim, num_hidden_neurons[0]),
             nn.LeakyReLU(),
-            nn.Dropout(0.5)
+            nn.Dropout(dropout)
         ]
         if len(num_hidden_neurons) > 1:
             for i in range(len(num_hidden_neurons) - 1):
                 layers.append(nn.Linear(num_hidden_neurons[i], num_hidden_neurons[i+1]))
                 layers.append(nn.LeakyReLU())
-                layers.append(nn.Dropout(0.5))
+                layers.append(nn.Dropout(dropout))
 
         layers.append(nn.Linear(num_hidden_neurons[-1], num_classes))
         self.network = nn.Sequential(*layers)

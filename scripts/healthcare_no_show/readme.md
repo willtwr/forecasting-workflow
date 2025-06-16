@@ -1,3 +1,8 @@
+Workflow:
+1. Data analysis - data_analysis_healthcare_no_show.ipynb
+2. Data preparation for training - dataset_prep_healthcare_no_show.ipynb
+3. Modeling - modeling_healthcare_no_show.ipynb
+
 Data representations for machine learning:
 1. patient_id
     - no need

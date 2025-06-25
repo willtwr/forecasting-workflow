@@ -6,6 +6,7 @@ weights/
 
 # Cache
 .mypy_cache/
+.ruff_cache/
 .venv/
 
 # Secrets

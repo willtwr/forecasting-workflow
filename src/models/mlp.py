@@ -54,7 +54,7 @@ class MLPClassifier(nn.Module):
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, num_classes)
         """
-        x = [nn.functional.one_hot(x[:,i].long(), num_classes=n_cats).float() if n_cats > 2 else x[:,i].unsqueeze(1) for i, n_cats in enumerate(self.feature_cats)]
-        x = torch.cat(x, dim=1)
+        x_list = [nn.functional.one_hot(x[:,i].long(), num_classes=n_cats).float() if n_cats > 2 else x[:,i].unsqueeze(1) for i, n_cats in enumerate(self.feature_cats)]
+        x = torch.cat(x_list, dim=1)
         output = self.network(x)
         return output

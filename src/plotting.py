@@ -1,8 +1,8 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
-def plot_stacked_bar(data: list[list[int | float]],
+def plot_stacked_bar(data: np.ndarray,
                      title: str = "Title",
                      ylabel: str = "Count",
                      group_labels: list | tuple | None = None,
@@ -14,7 +14,7 @@ def plot_stacked_bar(data: list[list[int | float]],
     Create a stacked bar chart with multiple categories stacked on top of each other.
     
     Args:
-        data (list[list[int | float]]): R x C matrix where R is the number of groups and C is the number of categories in each group
+        data (ndarray): R x C matrix where R is the number of groups and C is the number of categories in each group
         title (str): Title of the plot
         ylabel (str): Label for y-axis
         group_labels (list | tuple | None): Labels of each group
@@ -42,7 +42,7 @@ def plot_stacked_bar(data: list[list[int | float]],
     plt.show()
 
 
-def plot_grouped_bar(data: list[list[int | float]], 
+def plot_grouped_bar(data: np.ndarray, 
                      title: str = "Title",
                      ylabel: str = "Count",
                      group_labels: list | tuple | None = None,
@@ -51,7 +51,7 @@ def plot_grouped_bar(data: list[list[int | float]],
     Create a grouped bar chart where each group contains multiple categories side by side.
     
     Args:
-        data (list[list[int | float]]): R x C matrix where R is the number of groups and C is the number of categories in each group
+        data (ndarray): R x C matrix where R is the number of groups and C is the number of categories in each group
         title (str): Title of the plot
         ylabel (str): Label for y-axis
         group_labels (list | tuple | None): Labels of each group

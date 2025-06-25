@@ -35,16 +35,16 @@ class FTTransformerClassifier(nn.Module):
         self.feature_cats = feature_cats
         
         # Embedding layer for categorical data and continuous data
-        self.cat_embeddings = []
-        self.cont_embeddings = []
+        self.cat_embeddings_list = []
+        self.cont_embeddings_list = []
         for n_cats in feature_cats:
             if n_cats > 1:
-                self.cat_embeddings.append(nn.Embedding(n_cats, d_model))
+                self.cat_embeddings_list.append(nn.Embedding(n_cats, d_model))
             else:
-                self.cont_embeddings.append(nn.Linear(1, d_model))
+                self.cont_embeddings_list.append(nn.Linear(1, d_model))
 
-        self.cat_embeddings = nn.ModuleList(self.cat_embeddings)
-        self.cont_embeddings = nn.ModuleList(self.cont_embeddings)
+        self.cat_embeddings = nn.ModuleList(self.cat_embeddings_list)
+        self.cont_embeddings = nn.ModuleList(self.cont_embeddings_list)
 
         # Class token
         self.cls_token = nn.Parameter(torch.randn(1, 1, d_model))
@@ -78,29 +78,29 @@ class FTTransformerClassifier(nn.Module):
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, num_classes)
         """
-        x_cat = []
+        x_cat_list = []
         n_cat = 0
-        x_cont = []
+        x_cont_list = []
         n_cont = 0
         for i, n_cats in enumerate(self.feature_cats):
             if n_cats > 1:
-                x_cat.append(self.cat_embeddings[n_cat](x[:,i].long()))
+                x_cat_list.append(self.cat_embeddings[n_cat](x[:,i].long()))
                 n_cat += 1
             else:
-                x_cont.append(self.cont_embeddings[n_cont](x[:,i].unsqueeze(1)))
+                x_cont_list.append(self.cont_embeddings[n_cont](x[:,i].unsqueeze(1)))
                 n_cont += 1
 
         # Stack cls
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1)
-        if len(x_cat) == 0:
-            x_cont = torch.stack(x_cont, dim=1)
+        if len(x_cat_list) == 0:
+            x_cont = torch.stack(x_cont_list, dim=1)
             x = torch.cat([cls_tokens, x_cont], dim=1)
-        elif len(x_cont) == 0:
-            x_cat = torch.stack(x_cat, dim=1)
+        elif len(x_cont_list) == 0:
+            x_cat = torch.stack(x_cat_list, dim=1)
             x = torch.cat([cls_tokens, x_cat], dim=1)
         else:
-            x_cat = torch.stack(x_cat, dim=1)
-            x_cont = torch.stack(x_cont, dim=1)
+            x_cat = torch.stack(x_cat_list, dim=1)
+            x_cont = torch.stack(x_cont_list, dim=1)
             x = torch.cat([cls_tokens, x_cat, x_cont], dim=1)
         
         # Apply transformer encoder

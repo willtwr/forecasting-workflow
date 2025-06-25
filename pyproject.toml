@@ -5,6 +5,20 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "dotenv>=0.9.9",
+    "jupyterlab>=4.4.3",
+    "matplotlib>=3.10.3",
+    "mypy>=1.16.1",
+    "mysql-connector-python>=9.3.0",
     "pandas>=2.3.0",
+    "pydantic>=2.11.7",
+    "scikit-learn>=1.7.0",
+    "scipy>=1.16.0",
+    "sqlalchemy>=2.0.41",
     "torch>=2.7.1",
+    "xgboost>=3.0.2",
 ]
+
+[[tool.mypy.overrides]]
+module = ["pandas.*", "matplotlib.*", "scipy.*", "sklearn.*", "xgboost.*"]
+ignore_missing_imports = true

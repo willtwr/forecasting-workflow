@@ -4,9 +4,12 @@ data/
 runs/
 weights/
 
-# Cache
+# Caches
 .mypy_cache/
 .ruff_cache/
+.pytest_cache/
+
+# Python Environment
 .venv/
 
 # Secrets

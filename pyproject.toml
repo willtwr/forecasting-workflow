@@ -19,6 +19,14 @@ dependencies = [
     "xgboost>=3.0.2",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]
+
 [[tool.mypy.overrides]]
 module = ["pandas.*", "matplotlib.*", "scipy.*", "sklearn.*", "xgboost.*"]
 ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
